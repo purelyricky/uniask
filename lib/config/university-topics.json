@@ -1,0 +1,24 @@
+{
+  "topics": [
+    {
+      "id": "main",
+      "name": "Main Information",
+      "urls": ["https://unideb.hu/"]
+    },
+    {
+      "id": "phonebook",
+      "name": "Phonebook",
+      "urls": ["https://unideb.hu/hu/telefonkonyv"]
+    },
+    {
+      "id": "schedule",
+      "name": "Academic Schedule",
+      "urls": ["https://unideb.hu/tanevbeosztas-aktualis"]
+    },
+    {
+      "id": "international",
+      "name": "For International Students",
+      "urls": ["https://edu.unideb.hu/"]
+    }
+  ]
+}
