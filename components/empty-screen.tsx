@@ -4,20 +4,20 @@ import { Button } from '@/components/ui/button'
 
 const exampleMessages = [
   {
-    heading: 'What is DeepSeek R1?',
-    message: 'What is DeepSeek R1?'
+    heading: 'How do I apply to the University of Debrecen?',
+    message: 'How do I apply to the University of Debrecen?'
   },
   {
-    heading: 'Why is Nvidia growing rapidly?',
-    message: 'Why is Nvidia growing rapidly?'
+    heading: 'What are the tuition fees and payment options?',
+    message: 'What are the tuition fees and payment options?'
   },
   {
-    heading: 'Tesla vs Rivian',
-    message: 'Tesla vs Rivian'
+    heading: 'Tell me about the entrance examination process',
+    message: 'Tell me about the entrance examination process'
   },
   {
-    heading: 'Summary: https://arxiv.org/pdf/2501.05707',
-    message: 'Summary: https://arxiv.org/pdf/2501.05707'
+    heading: 'What accommodation options are available for students?',
+    message: 'What accommodation options are available for students?'
   }
 ]
 export function EmptyScreen({

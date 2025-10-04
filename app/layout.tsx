@@ -21,23 +21,41 @@ const fontSans = FontSans({
   variable: '--font-sans'
 })
 
-const title = 'Morphic'
+const title = 'UnidebAsk - University of Debrecen AI Assistant'
 const description =
-  'A fully open-source AI-powered answer engine with a generative UI.'
+  'AI-powered Q&A assistant specialized exclusively for University of Debrecen. Get instant answers about admissions, programs, student life, and more.'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://morphic.sh'),
+  metadataBase: new URL('https://unideb.hu'),
   title,
   description,
+  keywords: [
+    'University of Debrecen',
+    'Debrecen University',
+    'UnidebAsk',
+    'university admissions',
+    'study programs',
+    'international students',
+    'tuition fees',
+    'scholarships',
+    'student life',
+    'Hungary university',
+    'academic calendar',
+    'university AI assistant'
+  ],
+  icons: {
+    icon: '/logo.svg',
+    apple: '/logo.svg'
+  },
   openGraph: {
     title,
-    description
+    description,
+    siteName: 'UnidebAsk'
   },
   twitter: {
     title,
     description,
-    card: 'summary_large_image',
-    creator: '@miiura'
+    card: 'summary_large_image'
   }
 }
 

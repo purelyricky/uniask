@@ -37,7 +37,12 @@ export const registry = createProviderRegistry({
     apiKey: process.env.OPENAI_COMPATIBLE_API_KEY,
     baseURL: process.env.OPENAI_COMPATIBLE_API_BASE_URL
   }),
-  xai
+  xai,
+  // University of Debrecen custom model (Modal deployment)
+  'unideb-modal': createOpenAI({
+    apiKey: 'no-key-needed', // Modal endpoint doesn't need API key
+    baseURL: process.env.UNIDEB_MODAL_BASE_URL || ''
+  })
 })
 
 export function getModel(model: string) {
@@ -114,6 +119,8 @@ export function isProviderEnabled(providerId: string): boolean {
         !!process.env.OPENAI_COMPATIBLE_API_KEY &&
         !!process.env.OPENAI_COMPATIBLE_API_BASE_URL
       )
+    case 'unideb-modal':
+      return !!process.env.UNIDEB_MODAL_BASE_URL
     default:
       return false
   }

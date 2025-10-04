@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:edu.unideb.hu)",
+      "WebFetch(domain:unideb.hu)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

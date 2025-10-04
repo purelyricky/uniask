@@ -15,6 +15,7 @@ import { Button } from './ui/button'
 import { IconLogo } from './ui/icons'
 import { EmptyScreen } from './empty-screen'
 import { TopicSelector } from './topic-selector'
+import { ModelSelector } from './model-selector'
 
 interface ChatPanelProps {
   input: string
@@ -127,6 +128,7 @@ export function ChatPanel({
       <form
         onSubmit={handleSubmit}
         className={cn('max-w-3xl w-full mx-auto relative')}
+        suppressHydrationWarning
       >
         {/* Scroll to bottom button - only shown when showScrollToBottomButton is true */}
         {showScrollToBottomButton && messages.length > 0 && (
@@ -142,7 +144,7 @@ export function ChatPanel({
           </Button>
         )}
 
-        <div className="relative flex flex-col w-full gap-2 bg-muted rounded-3xl border border-input">
+        <div className="relative flex flex-col w-full gap-2 bg-muted rounded-3xl border border-input" suppressHydrationWarning>
           <Textarea
             ref={inputRef}
             name="input"
@@ -178,11 +180,13 @@ export function ChatPanel({
             }}
             onFocus={() => setShowEmptyScreen(true)}
             onBlur={() => setShowEmptyScreen(false)}
+            suppressHydrationWarning
           />
 
           {/* Bottom menu area */}
           <div className="flex items-center justify-between p-3">
             <div className="flex items-center gap-2">
+              {models && models.length > 0 && <ModelSelector models={models} />}
               <TopicSelector />
             </div>
             <div className="flex items-center gap-2">

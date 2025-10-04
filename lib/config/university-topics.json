@@ -1,24 +1,54 @@
 {
   "topics": [
     {
-      "id": "main",
-      "name": "Main Information",
-      "urls": ["https://unideb.hu/"]
+      "id": "general",
+      "name": "General Information",
+      "urls": ["https://unideb.hu/", "https://edu.unideb.hu/"]
     },
     {
-      "id": "phonebook",
-      "name": "Phonebook",
-      "urls": ["https://unideb.hu/hu/telefonkonyv"]
+      "id": "admissions",
+      "name": "Admissions & Application",
+      "urls": ["https://edu.unideb.hu/faq.php", "https://edu.unideb.hu/application-and-admission.php"]
     },
     {
-      "id": "schedule",
-      "name": "Academic Schedule",
-      "urls": ["https://unideb.hu/tanevbeosztas-aktualis"]
+      "id": "programs",
+      "name": "Study Programs",
+      "urls": ["https://edu.unideb.hu/study-programs.php", "https://edu.unideb.hu/"]
     },
     {
       "id": "international",
-      "name": "For International Students",
-      "urls": ["https://edu.unideb.hu/"]
+      "name": "International Students",
+      "urls": ["https://edu.unideb.hu/", "https://edu.unideb.hu/for-current-students.php"]
+    },
+    {
+      "id": "fees-scholarships",
+      "name": "Tuition & Scholarships",
+      "urls": ["https://edu.unideb.hu/scholarships-and-loans.php", "https://edu.unideb.hu/faq.php"]
+    },
+    {
+      "id": "student-life",
+      "name": "Student Life & Services",
+      "urls": ["https://edu.unideb.hu/student-life.php", "https://edu.unideb.hu/accommodation.php"]
+    },
+    {
+      "id": "academic",
+      "name": "Academic Calendar & Schedule",
+      "urls": ["https://unideb.hu/tanevbeosztas-aktualis", "https://edu.unideb.hu/university-calendars.php"]
+    },
+    {
+      "id": "faculties",
+      "name": "Faculties & Departments",
+      "urls": ["https://unideb.hu/tanulmanyi-osztalyok", "https://edu.unideb.hu/campuses-and-faculties.php"]
+    },
+    {
+      "id": "research",
+      "name": "Research & Publications",
+      "urls": ["https://detep.unideb.hu/", "https://edu.unideb.hu/research-and-publication.php"]
+    },
+    {
+      "id": "contact",
+      "name": "Contact & Support",
+      "urls": ["https://unideb.hu/hu/telefonkonyv", "https://edu.unideb.hu/contacts-and-opening-hours.php"]
     }
   ]
 }
