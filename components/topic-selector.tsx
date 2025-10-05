@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import { Check, ChevronsUpDown, BookUser, CalendarDays, Globe, Phone, GraduationCap, DollarSign, Users, Building2, FlaskConical, HeadphonesIcon } from 'lucide-react'
+import { BookUser, Building2, CalendarDays, Check, ChevronsUpDown, DollarSign, FlaskConical, Globe, GraduationCap, HeadphonesIcon,Phone, Users } from 'lucide-react'
 
-import { getCookie, setCookie } from '@/lib/utils/cookies'
 import universityTopics from '@/lib/config/university-topics.json'
+import { getCookie, setCookie } from '@/lib/utils/cookies'
+
 import { useIsMobile } from '@/hooks/use-mobile'
 
 import { Button } from './ui/button'

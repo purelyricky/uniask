@@ -14,8 +14,8 @@ import { useArtifact } from './artifact/artifact-context'
 import { Button } from './ui/button'
 import { IconLogo } from './ui/icons'
 import { EmptyScreen } from './empty-screen'
-import { TopicSelector } from './topic-selector'
 import { ModelSelector } from './model-selector'
+import { TopicSelector } from './topic-selector'
 
 interface ChatPanelProps {
   input: string
