@@ -230,6 +230,9 @@ export function ChatPanel({
           />
         )}
       </form>
+      <p className="text-center text-[10px] text-muted-foreground/60 mt-2 px-4">
+        This is not an official University of Debrecen service. AI can make mistakes. Please verify important information.
+      </p>
     </div>
   )
 }

@@ -1,6 +1,0 @@
-# Modal CLI
-modal
-
-# Local development dependencies
-datasets
-huggingface_hub

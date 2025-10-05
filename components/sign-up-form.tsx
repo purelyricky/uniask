@@ -23,6 +23,7 @@ export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<'div'>) {
+  const [firstName, setFirstName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
@@ -36,6 +37,13 @@ export function SignUpForm({
     setIsLoading(true)
     setError(null)
 
+    // Validate first name
+    if (!firstName.trim()) {
+      setError('First name is required')
+      setIsLoading(false)
+      return
+    }
+
     if (password !== repeatPassword) {
       setError('Passwords do not match')
       setIsLoading(false)
@@ -47,11 +55,15 @@ export function SignUpForm({
         email,
         password,
         options: {
-          emailRedirectTo: `${window.location.origin}/`
+          emailRedirectTo: `${window.location.origin}/auth/login`,
+          data: {
+            first_name: firstName.trim()
+          }
         }
       })
       if (error) throw error
-      router.push('/auth/sign-up-success')
+      // Redirect to login instead of success page
+      router.push('/auth/login')
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : 'An error occurred')
     } finally {
@@ -77,6 +89,17 @@ export function SignUpForm({
         <CardContent>
           <form onSubmit={handleSignUp}>
             <div className="flex flex-col gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  type="text"
+                  placeholder="John"
+                  required
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input

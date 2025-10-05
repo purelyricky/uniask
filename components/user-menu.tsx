@@ -31,7 +31,7 @@ interface UserMenuProps {
 export default function UserMenu({ user }: UserMenuProps) {
   const router = useRouter()
   const userName =
-    user.user_metadata?.full_name || user.user_metadata?.name || 'User'
+    user.user_metadata?.first_name || user.user_metadata?.full_name || user.user_metadata?.name || 'User'
   const avatarUrl =
     user.user_metadata?.avatar_url || user.user_metadata?.picture
 
