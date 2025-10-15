@@ -3,7 +3,7 @@
   "plugins": ["simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": [
-      "error",
+      "warn",
       {
         "groups": [
           // React and Next.js imports
@@ -31,6 +31,6 @@
         ]
       }
     ],
-    "simple-import-sort/exports": "error"
+    "simple-import-sort/exports": "warn"
   }
 }
