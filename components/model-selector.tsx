@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-
-import { Check, ChevronsUpDown, Cpu, Lightbulb } from 'lucide-react'
 import Image from 'next/image'
 
+import { Check, ChevronsUpDown, Cpu, Lightbulb } from 'lucide-react'
+
 import { Model } from '@/lib/types/models'
-import { getCookie, setCookie } from '@/lib/utils/cookies'
 import { createModelId } from '@/lib/utils'
+import { getCookie, setCookie } from '@/lib/utils/cookies'
 import { isReasoningModel } from '@/lib/utils/registry'
 
 import { Button } from './ui/button'
@@ -158,7 +158,10 @@ export function ModelSelector({ models }: ModelSelectorProps) {
             <Cpu className="size-4 sm:size-[18px]" />
           )}
           {selectedModel && isReasoningModel(selectedModel.id) && (
-            <Lightbulb size={10} className="absolute -top-0.5 -right-0.5 text-accent-blue-foreground" />
+            <Lightbulb
+              size={10}
+              className="absolute -top-0.5 -right-0.5 text-accent-blue-foreground"
+            />
           )}
         </Button>
       </PopoverTrigger>
@@ -190,7 +193,10 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                           {model.name}
                         </span>
                         {isReasoningModel(model.id) && (
-                          <Lightbulb size={12} className="text-accent-blue-foreground" />
+                          <Lightbulb
+                            size={12}
+                            className="text-accent-blue-foreground"
+                          />
                         )}
                       </div>
                       <Check
