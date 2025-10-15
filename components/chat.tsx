@@ -10,6 +10,9 @@ import { toast } from 'sonner'
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
 
+import { useUser } from '@/hooks/use-user'
+
+import { AuthRequiredOverlay } from './auth-required-overlay'
 import { ChatMessages } from './chat-messages'
 import { ChatPanel } from './chat-panel'
 
@@ -33,6 +36,8 @@ export function Chat({
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [isAtBottom, setIsAtBottom] = useState(true)
+  const [showAuthOverlay, setShowAuthOverlay] = useState(false)
+  const { user, loading: userLoading } = useUser()
 
   const {
     messages,
@@ -206,9 +211,23 @@ export function Chat({
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // Check if user is authenticated
+    if (!user) {
+      setShowAuthOverlay(true)
+      return
+    }
+
     setData(undefined)
     handleSubmit(e)
   }
+
+  // Hide auth overlay when user logs in
+  useEffect(() => {
+    if (user && showAuthOverlay) {
+      setShowAuthOverlay(false)
+    }
+  }, [user, showAuthOverlay])
 
   return (
     <div
@@ -218,6 +237,7 @@ export function Chat({
       )}
       data-testid="full-chat"
     >
+      {showAuthOverlay && <AuthRequiredOverlay />}
       <ChatMessages
         sections={sections}
         data={data}

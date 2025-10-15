@@ -18,6 +18,7 @@ export type AnswerSectionProps = {
     messageId: string,
     options?: ChatRequestOptions
   ) => Promise<string | null | undefined>
+  userQuestion?: string
 }
 
 export function AnswerSection({
@@ -27,7 +28,8 @@ export function AnswerSection({
   chatId,
   showActions = true, // Default to true for backward compatibility
   messageId,
-  reload
+  reload,
+  userQuestion
 }: AnswerSectionProps) {
   const enableShare = process.env.NEXT_PUBLIC_ENABLE_SHARE === 'true'
 
@@ -48,6 +50,7 @@ export function AnswerSection({
           chatId={chatId || ''}
           enableShare={enableShare}
           reload={handleReload}
+          userQuestion={userQuestion}
         />
       )}
     </div>

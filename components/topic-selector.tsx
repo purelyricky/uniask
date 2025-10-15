@@ -19,9 +19,8 @@ import {
   CommandItem,
   CommandList
 } from './ui/command'
-import { Drawer, DrawerContent, DrawerTrigger } from './ui/drawer'
+import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from './ui/drawer'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 
 interface Topic {
     id: string;
@@ -69,27 +68,18 @@ export function TopicSelector() {
   if (!mounted) {
     return (
       <Popover open={open} onOpenChange={setOpen}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <PopoverTrigger asChild>
-              <Button
-                variant="outline"
-                role="combobox"
-                aria-expanded={open}
-                className="text-sm rounded-full shadow-none focus:ring-0"
-              >
-                <div className="flex items-center space-x-1">
-                  <TopicIcon className="size-4" />
-                  <span className="text-xs font-medium truncate">
-                    {selectedTopic ? selectedTopic.name : 'Select Topic'}
-                  </span>
-                </div>
-                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
-          </TooltipTrigger>
-          <TooltipContent>Choose search topic</TooltipContent>
-        </Tooltip>
+        <PopoverTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            role="combobox"
+            aria-expanded={open}
+            aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
+            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+          >
+            <TopicIcon className="size-4 sm:size-[18px]" />
+          </Button>
+        </PopoverTrigger>
         <PopoverContent className="w-72 p-0" align="start">
           <Command>
             <CommandInput placeholder="Search topics..." />
@@ -130,35 +120,27 @@ export function TopicSelector() {
   if (isMobile) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <DrawerTrigger asChild>
-              <Button
-                variant="outline"
-                className="w-full justify-start rounded-full shadow-none focus:ring-0"
-              >
-                <div className="flex items-center space-x-2">
-                    <TopicIcon className="size-4" />
-                    <span className="text-xs font-medium truncate">
-                        {selectedTopic ? selectedTopic.name : 'Select a Topic'}
-                    </span>
-                </div>
-              </Button>
-            </DrawerTrigger>
-          </TooltipTrigger>
-          <TooltipContent>Choose search topic</TooltipContent>
-        </Tooltip>
-        <DrawerContent className="max-h-[80vh]">
-          <div className="p-4">
-            <h3 className="text-lg font-medium text-center mb-4">Choose a Topic</h3>
-            <div className="flex flex-col gap-2">
+        <DrawerTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
+            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+          >
+            <TopicIcon className="size-4 sm:size-[18px]" />
+          </Button>
+        </DrawerTrigger>
+        <DrawerContent className="max-h-[60vh]">
+          <div className="flex flex-col">
+            <DrawerTitle className="text-lg font-medium text-center pt-4 pb-2 px-4">Choose a Topic</DrawerTitle>
+            <div className="flex flex-col gap-2 p-4 pt-2 overflow-y-auto max-h-[calc(60vh-4rem)]">
               {universityTopics.topics.map(topic => {
                 const Icon = topicIcons[topic.id];
                 return (
                   <Button
                     key={topic.id}
                     variant="outline"
-                    className="w-full justify-between h-14"
+                    className="w-full justify-between h-14 flex-shrink-0"
                     onClick={() => handleTopicSelect(topic as Topic)}
                   >
                     <div className="flex items-center gap-3">
@@ -178,27 +160,18 @@ export function TopicSelector() {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-        <Tooltip>
-            <TooltipTrigger asChild>
-                <PopoverTrigger asChild>
-                    <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="text-sm rounded-full shadow-none focus:ring-0"
-                    >
-                        <div className="flex items-center space-x-1">
-                            <TopicIcon className="size-4" />
-                            <span className="text-xs font-medium truncate">
-                                {selectedTopic ? selectedTopic.name : 'Select Topic'}
-                            </span>
-                        </div>
-                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                    </Button>
-                </PopoverTrigger>
-            </TooltipTrigger>
-            <TooltipContent>Choose search topic</TooltipContent>
-        </Tooltip>
+        <PopoverTrigger asChild>
+            <Button
+            variant="ghost"
+            size="icon"
+            role="combobox"
+            aria-expanded={open}
+            aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
+            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+            >
+                <TopicIcon className="size-4 sm:size-[18px]" />
+            </Button>
+        </PopoverTrigger>
       <PopoverContent className="w-72 p-0" align="start">
         <Command>
           <CommandInput placeholder="Search topics..." />

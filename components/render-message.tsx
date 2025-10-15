@@ -21,6 +21,7 @@ interface RenderMessageProps {
     messageId: string,
     options?: ChatRequestOptions
   ) => Promise<string | null | undefined>
+  userQuestion?: string
 }
 
 export function RenderMessage({
@@ -32,7 +33,8 @@ export function RenderMessage({
   chatId,
   addToolResult,
   onUpdateMessage,
-  reload
+  reload,
+  userQuestion
 }: RenderMessageProps) {
   const relatedQuestions = useMemo(
     () =>
@@ -152,6 +154,7 @@ export function RenderMessage({
                 showActions={isLastPart}
                 messageId={messageId}
                 reload={reload}
+                userQuestion={userQuestion}
               />
             )
           case 'reasoning':

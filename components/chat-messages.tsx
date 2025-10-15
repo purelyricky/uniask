@@ -6,7 +6,7 @@ import { ChatRequestOptions, JSONValue, Message } from 'ai'
 
 import { cn } from '@/lib/utils'
 
-import { Spinner } from './ui/spinner'
+import { LoadingIndicator } from './loading-indicator'
 import { RenderMessage } from './render-message'
 import { ToolSection } from './tool-section'
 
@@ -153,7 +153,7 @@ export function ChatMessages({
                 onUpdateMessage={onUpdateMessage}
                 reload={reload}
               />
-              {showLoading && <Spinner />}
+              {showLoading && <LoadingIndicator />}
             </div>
 
             {/* Assistant messages */}
@@ -169,6 +169,7 @@ export function ChatMessages({
                   addToolResult={addToolResult}
                   onUpdateMessage={onUpdateMessage}
                   reload={reload}
+                  userQuestion={section.userMessage.content}
                 />
               </div>
             ))}

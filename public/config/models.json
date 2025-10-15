@@ -2,8 +2,8 @@
   "models": [
     {
       "id": "unideb-llama-3.1-8b",
-      "name": "UnidebAsk (University Model)",
-      "provider": "University of Debrecen",
+      "name": "Unideb 1.0",
+      "provider": "Unofficial Uni Model",
       "providerId": "unideb-modal",
       "enabled": true,
       "toolCallType": "manual",

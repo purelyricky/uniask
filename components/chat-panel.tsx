@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize'
 import { useRouter } from 'next/navigation'
 
 import { Message } from 'ai'
-import { ArrowUp, ChevronDown, MessageCirclePlus, Square } from 'lucide-react'
+import { ArrowUp, ChevronDown, MessageCirclePlus, Sparkles,Square } from 'lucide-react'
 
 import { Model } from '@/lib/types/models'
 import { cn } from '@/lib/utils'
@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils'
 import { useArtifact } from './artifact/artifact-context'
 import { Button } from './ui/button'
 import { IconLogo } from './ui/icons'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip'
 import { EmptyScreen } from './empty-screen'
 import { ModelSelector } from './model-selector'
 import { TopicSelector } from './topic-selector'
@@ -111,128 +112,163 @@ export function ChatPanel({
   }
 
   return (
-    <div
-      className={cn(
-        'w-full bg-background group/form-container shrink-0',
-        messages.length > 0 ? 'sticky bottom-0 px-2 pb-4' : 'px-6'
-      )}
-    >
-      {messages.length === 0 && (
-        <div className="mb-10 flex flex-col items-center gap-4">
-          <IconLogo className="size-12 text-muted-foreground" />
-          <p className="text-center text-3xl font-semibold">
-            How can I help you today?
-          </p>
-        </div>
-      )}
-      <form
-        onSubmit={handleSubmit}
-        className={cn('max-w-3xl w-full mx-auto relative')}
-        suppressHydrationWarning
-      >
-        {/* Scroll to bottom button - only shown when showScrollToBottomButton is true */}
-        {showScrollToBottomButton && messages.length > 0 && (
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            className="absolute -top-10 right-4 z-20 size-8 rounded-full shadow-md"
-            onClick={handleScrollToBottom}
-            title="Scroll to bottom"
-          >
-            <ChevronDown size={16} />
-          </Button>
+    <TooltipProvider>
+      <div
+        className={cn(
+          'w-full bg-background group/form-container shrink-0',
+          messages.length > 0 ? 'sticky bottom-0 px-2 sm:px-4 pb-4' : 'px-4 sm:px-6'
         )}
-
-        <div className="relative flex flex-col w-full gap-2 bg-muted rounded-3xl border border-input" suppressHydrationWarning>
-          <Textarea
-            ref={inputRef}
-            name="input"
-            rows={2}
-            maxRows={5}
-            tabIndex={0}
-            onCompositionStart={handleCompositionStart}
-            onCompositionEnd={handleCompositionEnd}
-            placeholder="Ask a question about the University of Debrecen..."
-            spellCheck={false}
-            value={input}
-            disabled={isLoading || isToolInvocationInProgress()}
-            className="resize-none w-full min-h-12 bg-transparent border-0 p-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
-            onChange={e => {
-              handleInputChange(e)
-              setShowEmptyScreen(e.target.value.length === 0)
-            }}
-            onKeyDown={e => {
-              if (
-                e.key === 'Enter' &&
-                !e.shiftKey &&
-                !isComposing &&
-                !enterDisabled
-              ) {
-                if (input.trim().length === 0) {
-                  e.preventDefault()
-                  return
-                }
-                e.preventDefault()
-                const textarea = e.target as HTMLTextAreaElement
-                textarea.form?.requestSubmit()
-              }
-            }}
-            onFocus={() => setShowEmptyScreen(true)}
-            onBlur={() => setShowEmptyScreen(false)}
-            suppressHydrationWarning
-          />
-
-          {/* Bottom menu area */}
-          <div className="flex items-center justify-between p-3">
-            <div className="flex items-center gap-2">
-              {models && models.length > 0 && <ModelSelector models={models} />}
-              <TopicSelector />
+      >
+        {messages.length === 0 && (
+          <div className="mb-8 sm:mb-12 flex flex-col items-center gap-3 sm:gap-4">
+            <div className="inline-flex items-center gap-2 sm:gap-3">
+              <IconLogo className="size-10 sm:size-12 text-foreground" />
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-foreground">
+                UnidebAsk
+              </h1>
             </div>
-            <div className="flex items-center gap-2">
-              {messages.length > 0 && (
+            <p className="text-center text-sm sm:text-base text-muted-foreground max-w-md px-4">
+              Your AI assistant for University of Debrecen
+            </p>
+          </div>
+        )}
+        <form
+          onSubmit={handleSubmit}
+          className={cn('max-w-3xl w-full mx-auto relative')}
+          suppressHydrationWarning
+        >
+          {/* Scroll to bottom button - only shown when showScrollToBottomButton is true */}
+          {showScrollToBottomButton && messages.length > 0 && (
+            <Tooltip>
+              <TooltipTrigger asChild>
                 <Button
+                  type="button"
                   variant="outline"
                   size="icon"
-                  onClick={handleNewChat}
-                  className="shrink-0 rounded-full group"
-                  type="button"
-                  disabled={isLoading || isToolInvocationInProgress()}
+                  className="absolute -top-12 right-4 z-20 size-9 rounded-full shadow-lg border-border/50 backdrop-blur-sm bg-background/80 hover:bg-background"
+                  onClick={handleScrollToBottom}
                 >
-                  <MessageCirclePlus className="size-4 group-hover:rotate-12 transition-all" />
+                  <ChevronDown size={18} />
                 </Button>
-              )}
-              <Button
-                type={isLoading ? 'button' : 'submit'}
-                size={'icon'}
-                variant={'outline'}
-                className={cn(isLoading && 'animate-pulse', 'rounded-full')}
-                disabled={
-                  (input.length === 0 && !isLoading) ||
-                  isToolInvocationInProgress()
+              </TooltipTrigger>
+              <TooltipContent side="left">
+                <p>Scroll to bottom</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
+
+          <div className="relative flex flex-col w-full gap-0 bg-background rounded-2xl sm:rounded-3xl border border-border shadow-sm hover:shadow-md transition-all" suppressHydrationWarning>
+            <Textarea
+              ref={inputRef}
+              name="input"
+              rows={1}
+              maxRows={6}
+              tabIndex={0}
+              onCompositionStart={handleCompositionStart}
+              onCompositionEnd={handleCompositionEnd}
+              placeholder="Ask a question about the University of Debrecen..."
+              spellCheck={false}
+              value={input}
+              disabled={isLoading || isToolInvocationInProgress()}
+              className="resize-none w-full min-h-[52px] sm:min-h-[56px] bg-transparent border-0 px-4 pt-4 pb-3 text-sm sm:text-base placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              onChange={e => {
+                handleInputChange(e)
+                setShowEmptyScreen(e.target.value.length === 0)
+              }}
+              onKeyDown={e => {
+                if (
+                  e.key === 'Enter' &&
+                  !e.shiftKey &&
+                  !isComposing &&
+                  !enterDisabled
+                ) {
+                  if (input.trim().length === 0) {
+                    e.preventDefault()
+                    return
+                  }
+                  e.preventDefault()
+                  const textarea = e.target as HTMLTextAreaElement
+                  textarea.form?.requestSubmit()
                 }
-                onClick={isLoading ? stop : undefined}
-              >
-                {isLoading ? <Square size={20} /> : <ArrowUp size={20} />}
-              </Button>
+              }}
+              onFocus={() => setShowEmptyScreen(true)}
+              onBlur={() => setShowEmptyScreen(false)}
+              suppressHydrationWarning
+            />
+
+            {/* Bottom control bar */}
+            <div className="flex items-center justify-between px-3 pb-3 gap-2">
+              <div className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
+                {models && models.length > 0 && <ModelSelector models={models} />}
+                <TopicSelector />
+              </div>
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                {messages.length > 0 && (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleNewChat}
+                        className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+                        type="button"
+                        disabled={isLoading || isToolInvocationInProgress()}
+                      >
+                        <MessageCirclePlus className="size-4 sm:size-[18px]" />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>New chat</p>
+                    </TooltipContent>
+                  </Tooltip>
+                )}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type={isLoading ? 'button' : 'submit'}
+                      size="icon"
+                      variant={input.trim().length > 0 ? 'default' : 'ghost'}
+                      className={cn(
+                        'size-8 sm:size-9 rounded-full transition-all',
+                        isLoading && 'animate-pulse',
+                        input.trim().length > 0 && 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm'
+                      )}
+                      disabled={
+                        (input.length === 0 && !isLoading) ||
+                        isToolInvocationInProgress()
+                      }
+                      onClick={isLoading ? stop : undefined}
+                    >
+                      {isLoading ? (
+                        <Square className="size-4 sm:size-[18px]" />
+                      ) : (
+                        <ArrowUp className="size-4 sm:size-[18px]" />
+                      )}
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{isLoading ? 'Stop generating' : 'Send message'}</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
           </div>
-        </div>
 
-        {messages.length === 0 && (
-          <EmptyScreen
-            submitMessage={message => {
-              handleInputChange({
-                target: { value: message }
-              } as React.ChangeEvent<HTMLTextAreaElement>)
-            }}
-            className={cn(showEmptyScreen ? 'visible' : 'invisible')}
-          />
-        )}
-      </form>
-      <p className="text-center text-[10px] text-muted-foreground/60 mt-2 px-4">
-        This is not an official University of Debrecen service. AI can make mistakes. Please verify important information.
-      </p>
-    </div>
+          {messages.length === 0 && (
+            <EmptyScreen
+              submitMessage={message => {
+                handleInputChange({
+                  target: { value: message }
+                } as React.ChangeEvent<HTMLTextAreaElement>)
+              }}
+              className={cn(showEmptyScreen ? 'visible' : 'invisible')}
+            />
+          )}
+        </form>
+        <p className="text-center text-[10px] sm:text-xs text-muted-foreground/60 mt-3 px-4">
+          This is not an official University of Debrecen service. AI can make mistakes.
+        </p>
+      </div>
+    </TooltipProvider>
   )
 }

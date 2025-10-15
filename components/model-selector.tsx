@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 
-import { Check, ChevronsUpDown, Lightbulb } from 'lucide-react'
+import { Check, ChevronsUpDown, Lightbulb, Cpu } from 'lucide-react'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
@@ -85,13 +85,14 @@ export function ModelSelector({ models }: ModelSelectorProps) {
       <Popover open={false} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
+            variant="ghost"
+            size="icon"
             role="combobox"
             aria-expanded={false}
-            className="text-sm rounded-full shadow-none focus:ring-0"
+            aria-label="Select AI model"
+            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
           >
-            Select model
-            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <Cpu className="size-4 sm:size-[18px]" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-72 p-0" align="start">
@@ -139,29 +140,27 @@ export function ModelSelector({ models }: ModelSelectorProps) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
+          size="icon"
           role="combobox"
           aria-expanded={open}
-          className="text-sm rounded-full shadow-none focus:ring-0"
+          aria-label={selectedModel ? selectedModel.name : 'Select AI model'}
+          className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all relative"
         >
           {selectedModel ? (
-            <div className="flex items-center space-x-1">
-              <Image
-                src={`/providers/logos/${selectedModel.providerId}.svg`}
-                alt={selectedModel.provider}
-                width={18}
-                height={18}
-                className="bg-white rounded-full border"
-              />
-              <span className="text-xs font-medium">{selectedModel.name}</span>
-              {isReasoningModel(selectedModel.id) && (
-                <Lightbulb size={12} className="text-accent-blue-foreground" />
-              )}
-            </div>
+            <Image
+              src={`/providers/logos/${selectedModel.providerId}.svg`}
+              alt={selectedModel.provider}
+              width={18}
+              height={18}
+              className="bg-white rounded-full border size-4 sm:size-[18px]"
+            />
           ) : (
-            'Select model'
+            <Cpu className="size-4 sm:size-[18px]" />
           )}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {selectedModel && isReasoningModel(selectedModel.id) && (
+            <Lightbulb size={10} className="absolute -top-0.5 -right-0.5 text-accent-blue-foreground" />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-72 p-0" align="start">
@@ -191,6 +190,9 @@ export function ModelSelector({ models }: ModelSelectorProps) {
                         <span className="text-xs font-medium">
                           {model.name}
                         </span>
+                        {isReasoningModel(model.id) && (
+                          <Lightbulb size={12} className="text-accent-blue-foreground" />
+                        )}
                       </div>
                       <Check
                         className={`h-4 w-4 ${

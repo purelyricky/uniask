@@ -1,16 +1,23 @@
 'use client'
 
-// import Link from 'next/link' // No longer needed directly here for Sign In button
 import React from 'react'
 
 import { User } from '@supabase/supabase-js'
+import Link from 'next/link'
+
+import { LogIn } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
 
 import { useSidebar } from '@/components/ui/sidebar'
 
-// import { Button } from './ui/button' // No longer needed directly here for Sign In button
+import { Button } from './ui/button'
 import GuestMenu from './guest-menu' // Import the new GuestMenu component
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from './ui/tooltip'
 import UserMenu from './user-menu'
 
 interface HeaderProps {
@@ -31,7 +38,34 @@ export const Header: React.FC<HeaderProps> = ({ user }) => {
       <div></div>
 
       <div className="flex items-center gap-2">
-        {user ? <UserMenu user={user} /> : <GuestMenu />}
+        {user ? (
+          <UserMenu user={user} />
+        ) : (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className={cn(
+                    'h-7 px-2.5 text-xs rounded-md shadow-sm',
+                    'hover:scale-[1.02] active:scale-[0.98] transition-transform'
+                  )}
+                  asChild
+                >
+                  <Link href="/auth/login">
+                    <LogIn className="size-3.5 mr-1.5" />
+                    <span>Sign In</span>
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" sideOffset={4}>
+                Sign in to save your chat history
+              </TooltipContent>
+            </Tooltip>
+            <GuestMenu />
+          </>
+        )}
       </div>
     </header>
   )
