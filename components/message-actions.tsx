@@ -101,31 +101,22 @@ export function MessageActions({
       {reload && <RetryButton reload={reload} messageId={messageId} />}
       <Button
         variant="ghost"
-        size="icon"
         onClick={handleFlagWrongAnswer}
         disabled={isFlagging || isFlagged}
         className={cn(
-          'rounded-full relative group',
-          isFlagged
-            ? 'bg-red-500 hover:bg-red-600 text-white'
-            : 'hover:bg-red-50 dark:hover:bg-red-950/20'
+          'rounded-full gap-1.5 h-8 px-3',
+          'bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700',
+          'text-white'
         )}
-        title={isFlagged ? 'Already flagged as wrong' : 'Flag wrong answer'}
       >
         <Flag
           size={14}
-          className={cn(
-            isFlagged
-              ? 'fill-white text-white'
-              : 'text-muted-foreground group-hover:text-red-500'
-          )}
+          className="fill-white text-white"
           strokeWidth={isFlagging ? 1.5 : 2}
         />
-        {isFlagged && (
-          <span className="absolute -top-1 -right-1 px-1 text-[8px] font-semibold bg-red-600 text-white rounded">
-            WRONG
-          </span>
-        )}
+        <span className="text-xs font-medium text-white">
+          {isFlagged ? 'Flagged' : 'Wrong'}
+        </span>
       </Button>
       <Button
         variant="ghost"
