@@ -105,16 +105,27 @@ export function MessageActions({
         onClick={handleFlagWrongAnswer}
         disabled={isFlagging || isFlagged}
         className={cn(
-          'rounded-full',
-          isFlagged && 'text-red-500 hover:text-red-600'
+          'rounded-full relative group',
+          isFlagged
+            ? 'bg-red-500 hover:bg-red-600 text-white'
+            : 'hover:bg-red-50 dark:hover:bg-red-950/20'
         )}
-        title={isFlagged ? 'Already flagged' : 'Flag wrong answer'}
+        title={isFlagged ? 'Already flagged as wrong' : 'Flag wrong answer'}
       >
         <Flag
           size={14}
-          className={cn(isFlagged && 'fill-red-500')}
+          className={cn(
+            isFlagged
+              ? 'fill-white text-white'
+              : 'text-muted-foreground group-hover:text-red-500'
+          )}
           strokeWidth={isFlagging ? 1.5 : 2}
         />
+        {isFlagged && (
+          <span className="absolute -top-1 -right-1 px-1 text-[8px] font-semibold bg-red-600 text-white rounded">
+            WRONG
+          </span>
+        )}
       </Button>
       <Button
         variant="ghost"
