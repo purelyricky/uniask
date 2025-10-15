@@ -62,7 +62,7 @@ export default async function SearchPage(props: {
   const userId = await getCurrentUserId()
   const { id } = await props.params
 
-  const chat = await getChat(id, userId)
+  const chat = await getChat(id, userId || 'anonymous')
   // convertToUIMessages for useChat hook
   const messages = convertToUIMessages(chat?.messages || [])
 
@@ -70,8 +70,20 @@ export default async function SearchPage(props: {
     redirect('/')
   }
 
-  if (chat?.userId !== userId && chat?.userId !== 'anonymous') {
-    notFound()
+  // Only allow access if:
+  // 1. User is authenticated AND owns the chat
+  // 2. OR chat is anonymous AND user is not trying to access someone else's chat
+  if (chat.userId && chat.userId !== 'anonymous') {
+    // Chat has an owner - only that owner can access it
+    if (!userId || chat.userId !== userId) {
+      notFound()
+    }
+  } else {
+    // Anonymous chat - anyone can view (for backward compatibility)
+    // But if user is authenticated, they shouldn't see anonymous chats
+    if (userId) {
+      notFound()
+    }
   }
 
   const models = await getModels()

@@ -119,7 +119,7 @@ export async function getChatsPage(
   }
 }
 
-export async function getChat(id: string, userId: string = 'anonymous') {
+export async function getChat(id: string, userId: string | null = null) {
   const redis = await getRedis()
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 
@@ -145,8 +145,12 @@ export async function getChat(id: string, userId: string = 'anonymous') {
 }
 
 export async function clearChats(
-  userId: string = 'anonymous'
+  userId: string | null = null
 ): Promise<{ error?: string }> {
+  if (!userId) {
+    return { error: 'Authentication required' }
+  }
+
   const redis = await getRedis()
   const userChatKey = getUserChatKey(userId)
   const chats = await redis.zrange(userChatKey, 0, -1)
@@ -168,9 +172,13 @@ export async function clearChats(
 
 export async function deleteChat(
   chatId: string,
-  userId = 'anonymous'
+  userId: string | null = null
 ): Promise<{ error?: string }> {
   try {
+    if (!userId) {
+      return { error: 'Authentication required' }
+    }
+
     const redis = await getRedis()
     const userKey = getUserChatKey(userId)
     const chatKey = `chat:${chatId}`
@@ -181,11 +189,11 @@ export async function deleteChat(
       return { error: 'Chat not found' }
     }
 
-    // Optional: Check if the chat actually belongs to the user if userId is provided and matters
-    // if (chatDetails.userId !== userId) {
-    //  console.warn(`Unauthorized attempt to delete chat ${chatId} by user ${userId}`)
-    //  return { error: 'Unauthorized' }
-    // }
+    // Check if the chat actually belongs to the user
+    if (chatDetails.userId !== userId) {
+      console.warn(`Unauthorized attempt to delete chat ${chatId} by user ${userId}`)
+      return { error: 'Unauthorized' }
+    }
 
     const pipeline = redis.pipeline()
     pipeline.del(chatKey)
@@ -202,7 +210,7 @@ export async function deleteChat(
   }
 }
 
-export async function saveChat(chat: Chat, userId: string = 'anonymous') {
+export async function saveChat(chat: Chat, userId: string | null = null) {
   try {
     const redis = await getRedis()
     const pipeline = redis.pipeline()
@@ -213,7 +221,11 @@ export async function saveChat(chat: Chat, userId: string = 'anonymous') {
     }
 
     pipeline.hmset(`chat:${chat.id}`, chatToSave)
-    pipeline.zadd(getUserChatKey(userId), Date.now(), `chat:${chat.id}`)
+
+    // Only add to user's chat list if user is authenticated
+    if (userId) {
+      pipeline.zadd(getUserChatKey(userId), Date.now(), `chat:${chat.id}`)
+    }
 
     const results = await pipeline.exec()
 
@@ -234,7 +246,11 @@ export async function getSharedChat(id: string) {
   return chat
 }
 
-export async function shareChat(id: string, userId: string = 'anonymous') {
+export async function shareChat(id: string, userId: string | null = null) {
+  if (!userId) {
+    return null
+  }
+
   const redis = await getRedis()
   const chat = await redis.hgetall<Chat>(`chat:${id}`)
 

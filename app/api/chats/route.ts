@@ -21,6 +21,11 @@ export async function GET(request: NextRequest) {
 
   const userId = await getCurrentUserId()
 
+  // Require authentication to view chat history
+  if (!userId) {
+    return NextResponse.json<ChatPageResponse>({ chats: [], nextOffset: null })
+  }
+
   try {
     const result = await getChatsPage(userId, limit, offset)
     return NextResponse.json<ChatPageResponse>(result)
