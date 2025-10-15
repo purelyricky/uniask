@@ -1,6 +1,6 @@
 'use client'
 
-import { SiGithub, SiX } from 'react-icons/si'
+import { SiLinkedin, SiX } from 'react-icons/si'
 import Link from 'next/link'
 
 import { DropdownMenuItem } from '@/components/ui/dropdown-menu'
@@ -12,9 +12,9 @@ const externalLinks = [
     icon: <SiX className="mr-2 h-4 w-4" />
   },
   {
-    name: 'GitHub',
-    href: 'https://github.com/purelyricky',
-    icon: <SiGithub className="mr-2 h-4 w-4" />
+    name: 'LinkedIn',
+    href: 'https://www.linkedin.com/in/purelyricky/',
+    icon: <SiLinkedin className="mr-2 h-4 w-4" />
   }
 ]
 

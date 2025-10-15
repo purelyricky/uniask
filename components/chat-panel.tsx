@@ -120,14 +120,14 @@ export function ChatPanel({
         )}
       >
         {messages.length === 0 && (
-          <div className="mb-8 sm:mb-12 flex flex-col items-center gap-3 sm:gap-4">
+          <div className="mb-8 sm:mb-10 flex flex-col items-center gap-2 sm:gap-3">
             <div className="inline-flex items-center gap-2 sm:gap-3">
               <IconLogo className="size-10 sm:size-12 text-foreground" />
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-foreground">
                 UnidebAsk
               </h1>
             </div>
-            <p className="text-center text-sm sm:text-base text-muted-foreground max-w-md px-4">
+            <p className="text-center text-sm text-muted-foreground max-w-md px-4">
               Your AI assistant for University of Debrecen
             </p>
           </div>
@@ -157,7 +157,7 @@ export function ChatPanel({
             </Tooltip>
           )}
 
-          <div className="relative flex flex-col w-full gap-0 bg-background rounded-2xl sm:rounded-3xl border border-border shadow-sm hover:shadow-md transition-all" suppressHydrationWarning>
+          <div className="relative flex flex-col w-full gap-0 bg-background rounded-2xl border border-border/50 shadow-sm hover:border-border transition-all" suppressHydrationWarning>
             <Textarea
               ref={inputRef}
               name="input"
@@ -170,7 +170,7 @@ export function ChatPanel({
               spellCheck={false}
               value={input}
               disabled={isLoading || isToolInvocationInProgress()}
-              className="resize-none w-full min-h-[52px] sm:min-h-[56px] bg-transparent border-0 px-4 pt-4 pb-3 text-sm sm:text-base placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+              className="resize-none w-full min-h-[50px] sm:min-h-[52px] bg-transparent border-0 px-4 pt-3.5 pb-2.5 text-sm sm:text-base placeholder:text-muted-foreground focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
               onChange={e => {
                 handleInputChange(e)
                 setShowEmptyScreen(e.target.value.length === 0)
@@ -197,12 +197,12 @@ export function ChatPanel({
             />
 
             {/* Bottom control bar */}
-            <div className="flex items-center justify-between px-3 pb-3 gap-2">
-              <div className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0">
+            <div className="flex items-center justify-between px-2.5 pb-2.5 gap-2">
+              <div className="flex items-center gap-1 flex-1 min-w-0">
                 {models && models.length > 0 && <ModelSelector models={models} />}
                 <TopicSelector />
               </div>
-              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1 flex-shrink-0">
                 {messages.length > 0 && (
                   <Tooltip>
                     <TooltipTrigger asChild>
@@ -210,11 +210,11 @@ export function ChatPanel({
                         variant="ghost"
                         size="icon"
                         onClick={handleNewChat}
-                        className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+                        className="size-8 rounded-full hover:bg-accent transition-all"
                         type="button"
                         disabled={isLoading || isToolInvocationInProgress()}
                       >
-                        <MessageCirclePlus className="size-4 sm:size-[18px]" />
+                        <MessageCirclePlus className="size-4" />
                       </Button>
                     </TooltipTrigger>
                     <TooltipContent>
@@ -229,9 +229,9 @@ export function ChatPanel({
                       size="icon"
                       variant={input.trim().length > 0 ? 'default' : 'ghost'}
                       className={cn(
-                        'size-8 sm:size-9 rounded-full transition-all',
+                        'size-8 rounded-full transition-all',
                         isLoading && 'animate-pulse',
-                        input.trim().length > 0 && 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm'
+                        input.trim().length > 0 && 'bg-primary text-primary-foreground hover:bg-primary/90'
                       )}
                       disabled={
                         (input.length === 0 && !isLoading) ||
@@ -240,9 +240,9 @@ export function ChatPanel({
                       onClick={isLoading ? stop : undefined}
                     >
                       {isLoading ? (
-                        <Square className="size-4 sm:size-[18px]" />
+                        <Square className="size-4" />
                       ) : (
-                        <ArrowUp className="size-4 sm:size-[18px]" />
+                        <ArrowUp className="size-4" />
                       )}
                     </Button>
                   </TooltipTrigger>
@@ -265,9 +265,11 @@ export function ChatPanel({
             />
           )}
         </form>
-        <p className="text-center text-[10px] sm:text-xs text-muted-foreground/60 mt-3 px-4">
-          This is not an official University of Debrecen service. AI can make mistakes.
-        </p>
+        {messages.length === 0 && (
+          <p className="text-center text-[10px] sm:text-xs text-muted-foreground/50 mt-3 px-4">
+            This is not an official University of Debrecen service. AI can make mistakes.
+          </p>
+        )}
       </div>
     </TooltipProvider>
   )

@@ -75,9 +75,9 @@ export function TopicSelector() {
             role="combobox"
             aria-expanded={open}
             aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
-            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+            className="size-8 rounded-full hover:bg-accent/50 transition-colors"
           >
-            <TopicIcon className="size-4 sm:size-[18px]" />
+            <TopicIcon className="size-4" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-72 p-0" align="start">
@@ -125,9 +125,9 @@ export function TopicSelector() {
             variant="ghost"
             size="icon"
             aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
-            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+            className="size-8 rounded-full hover:bg-accent/50 transition-colors"
           >
-            <TopicIcon className="size-4 sm:size-[18px]" />
+            <TopicIcon className="size-4" />
           </Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[60vh]">
@@ -167,9 +167,9 @@ export function TopicSelector() {
             role="combobox"
             aria-expanded={open}
             aria-label={selectedTopic ? selectedTopic.name : 'Choose search topic'}
-            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+            className="size-8 rounded-full hover:bg-accent/50 transition-colors"
             >
-                <TopicIcon className="size-4 sm:size-[18px]" />
+                <TopicIcon className="size-4" />
             </Button>
         </PopoverTrigger>
       <PopoverContent className="w-72 p-0" align="start">

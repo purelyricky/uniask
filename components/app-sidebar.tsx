@@ -12,8 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarRail,
-  SidebarTrigger
+  SidebarRail
 } from '@/components/ui/sidebar'
 
 import { ChatHistorySection } from './sidebar/chat-history-section'
@@ -28,7 +27,6 @@ export default function AppSidebar() {
           <IconLogo className={cn('size-5')} />
           <span className="font-semibold text-sm">UnidebAsk</span>
         </Link>
-        <SidebarTrigger />
       </SidebarHeader>
       <SidebarContent className="flex flex-col px-2 py-4 h-full">
         <SidebarMenu>

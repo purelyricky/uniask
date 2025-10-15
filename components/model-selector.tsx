@@ -89,9 +89,9 @@ export function ModelSelector({ models }: ModelSelectorProps) {
             role="combobox"
             aria-expanded={false}
             aria-label="Select AI model"
-            className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all"
+            className="size-8 rounded-full hover:bg-accent/50 transition-colors"
           >
-            <Cpu className="size-4 sm:size-[18px]" />
+            <Cpu className="size-4" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-72 p-0" align="start">
@@ -144,18 +144,18 @@ export function ModelSelector({ models }: ModelSelectorProps) {
           role="combobox"
           aria-expanded={open}
           aria-label={selectedModel ? selectedModel.name : 'Select AI model'}
-          className="size-8 sm:size-9 rounded-full hover:bg-accent transition-all relative"
+          className="size-8 rounded-full hover:bg-accent/50 transition-colors relative"
         >
           {selectedModel ? (
             <Image
               src={`/providers/logos/${selectedModel.providerId}.svg`}
               alt={selectedModel.provider}
-              width={18}
-              height={18}
-              className="bg-white rounded-full border size-4 sm:size-[18px]"
+              width={16}
+              height={16}
+              className="bg-white rounded-full border size-4"
             />
           ) : (
-            <Cpu className="size-4 sm:size-[18px]" />
+            <Cpu className="size-4" />
           )}
           {selectedModel && isReasoningModel(selectedModel.id) && (
             <Lightbulb
