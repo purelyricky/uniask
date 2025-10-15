@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+
 import { User } from '@supabase/supabase-js'
 import { LogIn } from 'lucide-react'
 
@@ -10,7 +11,11 @@ import { useSidebar } from '@/components/ui/sidebar'
 
 import { Button } from './ui/button'
 import GuestMenu from './guest-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from './ui/tooltip'
 import UserMenu from './user-menu'
 
 interface HeaderProps {

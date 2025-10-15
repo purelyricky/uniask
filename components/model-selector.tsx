@@ -1,15 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Image from 'next/image'
 
-import { Check, ChevronsUpDown, Lightbulb, Cpu } from 'lucide-react'
+import { Check, ChevronsUpDown, Cpu, Lightbulb } from 'lucide-react'
+import Image from 'next/image'
 
 import { Model } from '@/lib/types/models'
 import { getCookie, setCookie } from '@/lib/utils/cookies'
+import { createModelId } from '@/lib/utils'
 import { isReasoningModel } from '@/lib/utils/registry'
-
-import { createModelId } from '../lib/utils'
 
 import { Button } from './ui/button'
 import {
