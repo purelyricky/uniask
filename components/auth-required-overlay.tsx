@@ -1,12 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-
 import { X } from 'lucide-react'
 
+import { Button } from './ui/button'
 import { LoginForm } from './login-form'
 import { SignUpForm } from './sign-up-form'
-import { Button } from './ui/button'
 
 interface AuthRequiredOverlayProps {
   onDismiss?: () => void

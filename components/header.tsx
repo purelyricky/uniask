@@ -1,23 +1,16 @@
 'use client'
 
 import React from 'react'
-
-import { User } from '@supabase/supabase-js'
 import Link from 'next/link'
-
+import { User } from '@supabase/supabase-js'
 import { LogIn } from 'lucide-react'
 
 import { cn } from '@/lib/utils'
-
 import { useSidebar } from '@/components/ui/sidebar'
 
 import { Button } from './ui/button'
-import GuestMenu from './guest-menu' // Import the new GuestMenu component
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from './ui/tooltip'
+import GuestMenu from './guest-menu'
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 import UserMenu from './user-menu'
 
 interface HeaderProps {
