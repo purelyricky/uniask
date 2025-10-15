@@ -61,7 +61,7 @@ export interface Chat extends Record<string, any> {
   id: string
   title: string
   createdAt: Date
-  userId: string
+  userId: string | null
   path: string
   messages: ExtendedCoreMessage[] // Note: Changed from AIMessage to ExtendedCoreMessage
   sharePath?: string

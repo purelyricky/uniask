@@ -11,7 +11,7 @@ interface HandleStreamFinishParams {
   model: string
   chatId: string
   dataStream: DataStreamWriter
-  userId: string
+  userId: string | null
   skipRelatedQuestions?: boolean
   annotations?: ExtendedCoreMessage[]
 }
