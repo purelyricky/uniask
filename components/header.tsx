@@ -7,16 +7,16 @@ import { useRouter } from 'next/navigation'
 import { User } from '@supabase/supabase-js'
 import { Github } from 'lucide-react'
 
-import { cn } from '@/lib/utils'
 import { createClient } from '@/lib/supabase/client'
+import { cn } from '@/lib/utils'
 
 import { useSidebar } from '@/components/ui/sidebar'
 
 import { Button } from './ui/button'
+import { SidebarTrigger } from './ui/sidebar'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 import GuestMenu from './guest-menu'
 import UserMenu from './user-menu'
-import { SidebarTrigger } from './ui/sidebar'
 
 interface HeaderProps {
   user: User | null
