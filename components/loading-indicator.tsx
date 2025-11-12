@@ -6,30 +6,55 @@ import { cn } from '@/lib/utils'
 
 import { Spinner } from './ui/spinner'
 
-const loadingMessages = [
-  'Thinking...',
-  'Searching...',
-  'Analyzing...',
-  'Processing...',
-  'Gathering information...',
-  'Skiddaddling...',
-  'Pondering...',
-  'Contemplating...',
-  'Investigating...',
-  'Exploring...'
-]
+type LoadingState = 'searching' | 'reasoning' | 'thinking' | 'processing'
 
-export function LoadingIndicator({ className }: { className?: string }) {
+const stateMessages: Record<LoadingState, string[]> = {
+  searching: [
+    'Researching...',
+    'Searching...',
+    'Gathering information...',
+    'Exploring sources...',
+    'Finding relevant results...'
+  ],
+  reasoning: [
+    'Reasoning...',
+    'Analyzing information...',
+    'Thinking deeply...',
+    'Contemplating...',
+    'Synthesizing insights...'
+  ],
+  thinking: [
+    'Thinking...',
+    'Processing...',
+    'Pondering...',
+    'Working on it...'
+  ],
+  processing: [
+    'Processing results...',
+    'Analyzing...',
+    'Organizing information...',
+    'Preparing response...'
+  ]
+}
+
+export function LoadingIndicator({
+  className,
+  state = 'thinking'
+}: {
+  className?: string
+  state?: LoadingState
+}) {
+  const messages = stateMessages[state]
   const [messageIndex, setMessageIndex] = useState(0)
 
   useEffect(() => {
     // Rotate through messages every 2 seconds
     const interval = setInterval(() => {
-      setMessageIndex(prev => (prev + 1) % loadingMessages.length)
+      setMessageIndex(prev => (prev + 1) % messages.length)
     }, 2000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [messages.length])
 
   return (
     <div
@@ -40,7 +65,7 @@ export function LoadingIndicator({ className }: { className?: string }) {
     >
       <Spinner className="size-4" />
       <span className="text-sm text-muted-foreground animate-pulse">
-        {loadingMessages[messageIndex]}
+        {messages[messageIndex]}
       </span>
     </div>
   )

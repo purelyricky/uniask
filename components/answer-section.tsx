@@ -3,7 +3,6 @@
 import { ChatRequestOptions } from 'ai'
 
 import { CollapsibleMessage } from './collapsible-message'
-import { DefaultSkeleton } from './default-skeleton'
 import { BotMessage } from './message'
 import { MessageActions } from './message-actions'
 
@@ -40,23 +39,12 @@ export function AnswerSection({
     return Promise.resolve(undefined)
   }
 
-  const message = content ? (
-    <div className="flex flex-col gap-1">
-      <BotMessage message={content} />
-      {showActions && (
-        <MessageActions
-          message={content} // Keep original message content for copy
-          messageId={messageId}
-          chatId={chatId || ''}
-          enableShare={enableShare}
-          reload={handleReload}
-          userQuestion={userQuestion}
-        />
-      )}
-    </div>
-  ) : (
-    <DefaultSkeleton />
-  )
+  // Don't render anything if there's no content
+  // The LoadingIndicator will be shown instead
+  if (!content || content.trim().length === 0) {
+    return null
+  }
+
   return (
     <CollapsibleMessage
       role="assistant"
@@ -66,7 +54,19 @@ export function AnswerSection({
       showBorder={false}
       showIcon={false}
     >
-      {message}
+      <div className="flex flex-col gap-1">
+        <BotMessage message={content} />
+        {showActions && (
+          <MessageActions
+            message={content} // Keep original message content for copy
+            messageId={messageId}
+            chatId={chatId || ''}
+            enableShare={enableShare}
+            reload={handleReload}
+            userQuestion={userQuestion}
+          />
+        )}
+      </div>
     </CollapsibleMessage>
   )
 }
