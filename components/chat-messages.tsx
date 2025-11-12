@@ -82,24 +82,78 @@ export function ChatMessages({
     }
   }, [data])
 
-  if (!sections.length) return null
+  // Check if loading indicator should be shown
+  // Keep showing loading until we have actual text content to display
+  const showLoading = useMemo(() => {
+    if (!isLoading || sections.length === 0) return false
+
+    const lastSection = sections[sections.length - 1]
+
+    // Show loading if no assistant messages yet
+    if (lastSection.assistantMessages.length === 0) return true
+
+    // Check if any assistant message has text content
+    const hasTextContent = lastSection.assistantMessages.some(msg =>
+      msg.parts?.some(part => part.type === 'text' && part.text.trim().length > 0)
+    )
+
+    // Keep showing loading until we have text content
+    return !hasTextContent
+  }, [isLoading, sections])
+
+  // Determine loading state based on what's happening
+  const loadingState = useMemo(():
+    | 'searching'
+    | 'reasoning'
+    | 'thinking'
+    | 'processing' => {
+    if (!isLoading || sections.length === 0) return 'thinking'
+
+    const lastSection = sections[sections.length - 1]
+
+    // Check if we have tool data (searching)
+    if (lastToolData) return 'searching'
+
+    // Check if assistant messages have content
+    if (lastSection.assistantMessages.length > 0) {
+      const lastMessage =
+        lastSection.assistantMessages[lastSection.assistantMessages.length - 1]
+
+      // Check for reasoning parts
+      const hasReasoning = lastMessage.parts?.some(
+        part => part.type === 'reasoning'
+      )
+      if (hasReasoning) return 'reasoning'
+
+      // Check for tool invocations
+      const hasToolInvocations = lastMessage.parts?.some(
+        part => part.type === 'tool-invocation'
+      )
+      if (hasToolInvocations) return 'processing'
+    }
+
+    return 'thinking'
+  }, [isLoading, sections, lastToolData])
 
   // Get all messages as a flattened array
-  const allMessages = sections.flatMap(section => [
-    section.userMessage,
-    ...section.assistantMessages
-  ])
+  const allMessages = useMemo(
+    () =>
+      sections.flatMap(section => [
+        section.userMessage,
+        ...section.assistantMessages
+      ]),
+    [sections]
+  )
 
-  const lastUserIndex =
-    allMessages.length -
-    1 -
-    [...allMessages].reverse().findIndex(msg => msg.role === 'user')
+  const lastUserIndex = useMemo(
+    () =>
+      allMessages.length -
+      1 -
+      [...allMessages].reverse().findIndex(msg => msg.role === 'user'),
+    [allMessages]
+  )
 
-  // Check if loading indicator should be shown
-  const showLoading =
-    isLoading &&
-    sections.length > 0 &&
-    sections[sections.length - 1].assistantMessages.length === 0
+  if (!sections.length) return null
 
   const getIsOpen = (id: string) => {
     if (id.includes('call')) {
@@ -153,7 +207,7 @@ export function ChatMessages({
                 onUpdateMessage={onUpdateMessage}
                 reload={reload}
               />
-              {showLoading && <LoadingIndicator />}
+              {showLoading && <LoadingIndicator state={loadingState} />}
             </div>
 
             {/* Assistant messages */}
